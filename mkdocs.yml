@@ -1,0 +1,149 @@
+site_name: Oracle Database Reference
+theme: readthedocs
+copyright: "Copyright © 2026. Documentation generated with AI; validate and review before production use."
+extra_javascript:
+  - assets/sidebar-scroll.js
+nav:
+  - SECTION 1 — Database Fundamentals:
+      - What is a Database: section-01/s1-what-is-db.md
+      - Relational database concepts: section-01/s1-relational.md
+      - Tables and rows: section-01/s1-tables-rows.md
+      - Columns and datatypes: section-01/s1-columns-types.md
+      - Primary key: section-01/s1-pk.md
+      - Composite key: section-01/s1-composite.md
+      - Foreign key: section-01/s1-fk.md
+      - Unique constraints: section-01/s1-unique.md
+      - Not null constraint: section-01/s1-not-null.md
+      - Check constraints: section-01/s1-check.md
+  - SECTION 2 — SQL Query Fundamentals:
+      - SELECT: section-02/s2-select.md
+      - INSERT: section-02/s2-insert.md
+      - UPDATE: section-02/s2-update.md
+      - DELETE: section-02/s2-delete.md
+      - WHERE clause: section-02/s2-where.md
+      - ORDER BY: section-02/s2-order.md
+      - GROUP BY: section-02/s2-group.md
+      - HAVING: section-02/s2-having.md
+      - DISTINCT: section-02/s2-distinct.md
+      - FETCH / LIMIT: section-02/s2-fetch.md
+  - SECTION 3 — Joins:
+      - INNER JOIN: section-03/s3-inner.md
+      - LEFT JOIN: section-03/s3-left.md
+      - RIGHT JOIN: section-03/s3-right.md
+      - FULL JOIN: section-03/s3-full.md
+      - SELF JOIN: section-03/s3-self.md
+      - CROSS JOIN: section-03/s3-cross.md
+      - Multi-table joins: section-03/s3-multi.md
+  - SECTION 4 — Aggregation Functions:
+      - COUNT: section-04/s4-count.md
+      - SUM: section-04/s4-sum.md
+      - AVG: section-04/s4-avg.md
+      - MIN: section-04/s4-min.md
+      - MAX: section-04/s4-max.md
+      - GROUPING queries: section-04/s4-grouping.md
+  - SECTION 5 — Advanced SQL Queries:
+      - Subqueries: section-05/s5-subqueries.md
+      - Correlated subqueries: section-05/s5-correlated.md
+      - EXISTS: section-05/s5-exists.md
+      - IN vs EXISTS: section-05/s5-in-vs-exists.md
+      - CASE statements: section-05/s5-case.md
+      - COALESCE: section-05/s5-coalesce.md
+      - NULL handling: section-05/s5-null-handling.md
+      - Recursive queries: section-05/s5-recursive.md
+      - Hierarchical queries (CONNECT BY): section-05/s5-hierarchical.md
+  - SECTION 6 — Window Functions:
+      - ROW_NUMBER: section-06/s6-row-number.md
+      - RANK: section-06/s6-rank.md
+      - DENSE_RANK: section-06/s6-dense-rank.md
+      - NTILE: section-06/s6-ntile.md
+      - LEAD: section-06/s6-lead.md
+      - LAG: section-06/s6-lag.md
+      - FIRST_VALUE: section-06/s6-first-value.md
+      - LAST_VALUE: section-06/s6-last-value.md
+  - SECTION 7 — Data Modeling & Relational Design:
+      - Entity relationship modeling: section-07/s7-erm.md
+      - One-to-one relationship: section-07/s7-1to1.md
+      - One-to-many relationship: section-07/s7-1tomany.md
+      - Many-to-many relationship: section-07/s7-manytomany.md
+      - Junction tables: section-07/s7-junction.md
+      - Referential integrity: section-07/s7-ri.md
+  - SECTION 8 — Database Normalization:
+      - First Normal Form (1NF): section-08/s8-1nf.md
+      - Second Normal Form (2NF): section-08/s8-2nf.md
+      - Third Normal Form (3NF): section-08/s8-3nf.md
+      - BCNF: section-08/s8-bcnf.md
+      - Denormalization strategies: section-08/s8-denorm.md
+  - SECTION 9 — Indexing Architecture:
+      - What is an index: section-09/s9-what.md
+      - B-tree index: section-09/s9-btree.md
+      - Bitmap index: section-09/s9-bitmap.md
+      - Composite index: section-09/s9-composite.md
+      - Unique index: section-09/s9-unique.md
+      - Index usage: section-09/s9-usage.md
+      - When not to use indexes: section-09/s9-avoid.md
+      - Index access path diagram: section-09/s9-diagrams.md
+      - Index vs full scan comparison: section-09/s9-compare.md
+  - SECTION 10 — Query Optimization & Performance:
+      - Query execution plan: section-10/s10-plan.md
+      - Cost-based optimizer: section-10/s10-cbo.md
+      - Index usage analysis: section-10/s10-index-analysis.md
+      - Full table scans: section-10/s10-fts.md
+      - Join optimization: section-10/s10-join-opt.md
+      - Partitioning strategies: section-10/s10-partitioning.md
+  - SECTION 11 — Oracle Caching Architecture:
+      - Buffer cache: section-11/s11-buffer.md
+      - Shared pool: section-11/s11-shared-pool.md
+      - Library cache: section-11/s11-library.md
+      - SQL result cache: section-11/s11-result-cache.md
+      - Query caching strategies: section-11/s11-strategies.md
+  - SECTION 12 — PL/SQL Programming:
+      - Stored procedures: section-12/s12-proc.md
+      - Functions: section-12/s12-fn.md
+      - Packages: section-12/s12-packages.md
+      - Triggers: section-12/s12-triggers.md
+      - Exception handling: section-12/s12-exceptions.md
+      - Cursor usage: section-12/s12-cursors.md
+      - Bulk operations: section-12/s12-bulk.md
+  - SECTION 13 — Transactions & Concurrency:
+      - ACID properties: section-13/s13-acid.md
+      - COMMIT: section-13/s13-commit.md
+      - ROLLBACK: section-13/s13-rollback.md
+      - SAVEPOINT: section-13/s13-savepoint.md
+      - Locking mechanisms: section-13/s13-locks.md
+      - Isolation levels: section-13/s13-isolation.md
+  - SECTION 14 — Advanced Database Features:
+      - Partitioning: section-14/s14-partitioning.md
+      - Materialized views: section-14/s14-mv.md
+      - Database links: section-14/s14-dblinks.md
+      - Sequences: section-14/s14-seq.md
+      - Synonyms: section-14/s14-synonyms.md
+      - Flashback queries: section-14/s14-flashback.md
+  - SECTION 15 — Enterprise Database Architecture:
+      - High availability: section-15/s15-ha.md
+      - Replication: section-15/s15-repl.md
+      - Data warehousing: section-15/s15-dwh.md
+      - ETL pipelines: section-15/s15-etl.md
+      - Data partitioning strategies: section-15/s15-part.md
+      - Horizontal scaling: section-15/s15-scale.md
+  - SECTION 16 — Real Enterprise Case Studies:
+      - Financial transaction database: section-16/s16-fin.md
+      - E-commerce order database: section-16/s16-ecom.md
+      - User management system: section-16/s16-iam.md
+      - Reporting database: section-16/s16-report.md
+      - Large-scale analytics database: section-16/s16-analytics.md
+      - Data warehouse architecture: section-16/s16-dwh.md
+      - High-volume log database: section-16/s16-logs.md
+  - SECTION 17 — Performance Engineering:
+      - Query tuning techniques: section-17/s17-tuning.md
+      - Index optimization: section-17/s17-index.md
+      - Database caching strategies: section-17/s17-cache.md
+      - Connection pooling: section-17/s17-pool.md
+      - Avoiding slow queries: section-17/s17-avoid.md
+      - Monitoring database performance: section-17/s17-monitor.md
+  - SECTION 18 — Database Anti-Patterns:
+      - Missing indexes: section-18/s18-missing-index.md
+      - Over-indexing: section-18/s18-over-index.md
+      - N+1 query problem: section-18/s18-nplus1.md
+      - Poor normalization: section-18/s18-poor-norm.md
+      - Inefficient joins: section-18/s18-joins.md
+      - Unbounded queries: section-18/s18-unbounded.md

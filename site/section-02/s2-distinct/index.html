@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>DISTINCT - Oracle Database Reference</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "DISTINCT";
+        var mkdocs_page_input_path = "section-02/s2-distinct.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Oracle Database Reference
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">SECTION 1 — Database Fundamentals</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-01/s1-what-is-db/">What is a Database</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-01/s1-relational/">Relational database concepts</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-01/s1-tables-rows/">Tables and rows</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-01/s1-columns-types/">Columns and datatypes</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-01/s1-pk/">Primary key</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-01/s1-composite/">Composite key</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-01/s1-fk/">Foreign key</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-01/s1-unique/">Unique constraints</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-01/s1-not-null/">Not null constraint</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-01/s1-check/">Check constraints</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">SECTION 2 — SQL Query Fundamentals</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../s2-select/">SELECT</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../s2-insert/">INSERT</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../s2-update/">UPDATE</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../s2-delete/">DELETE</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../s2-where/">WHERE clause</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../s2-order/">ORDER BY</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../s2-group/">GROUP BY</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../s2-having/">HAVING</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">DISTINCT</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#concept-explanation">Concept explanation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#architecture-intent">Architecture intent</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#sql-example">SQL example</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#sample-input-data">Sample input data</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#query-execution">Query execution</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#output">Output</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#real-enterprise-use-case">Real enterprise use case</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#performance-considerations">Performance considerations</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#query-optimization-notes">Query optimization notes</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#best-practice-recommendations">Best practice recommendations</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../s2-fetch/">FETCH / LIMIT</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">SECTION 3 — Joins</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-03/s3-inner/">INNER JOIN</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-03/s3-left/">LEFT JOIN</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-03/s3-right/">RIGHT JOIN</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-03/s3-full/">FULL JOIN</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-03/s3-self/">SELF JOIN</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-03/s3-cross/">CROSS JOIN</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-03/s3-multi/">Multi-table joins</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">SECTION 4 — Aggregation Functions</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-04/s4-count/">COUNT</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-04/s4-sum/">SUM</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-04/s4-avg/">AVG</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-04/s4-min/">MIN</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-04/s4-max/">MAX</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-04/s4-grouping/">GROUPING queries</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">SECTION 5 — Advanced SQL Queries</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-05/s5-subqueries/">Subqueries</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-05/s5-correlated/">Correlated subqueries</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-05/s5-exists/">EXISTS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-05/s5-in-vs-exists/">IN vs EXISTS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-05/s5-case/">CASE statements</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-05/s5-coalesce/">COALESCE</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-05/s5-null-handling/">NULL handling</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-05/s5-recursive/">Recursive queries</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-05/s5-hierarchical/">Hierarchical queries (CONNECT BY)</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">SECTION 6 — Window Functions</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-06/s6-row-number/">ROW_NUMBER</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-06/s6-rank/">RANK</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-06/s6-dense-rank/">DENSE_RANK</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-06/s6-ntile/">NTILE</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-06/s6-lead/">LEAD</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-06/s6-lag/">LAG</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-06/s6-first-value/">FIRST_VALUE</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-06/s6-last-value/">LAST_VALUE</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">SECTION 7 — Data Modeling & Relational Design</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-07/s7-erm/">Entity relationship modeling</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-07/s7-1to1/">One-to-one relationship</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-07/s7-1tomany/">One-to-many relationship</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-07/s7-manytomany/">Many-to-many relationship</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-07/s7-junction/">Junction tables</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-07/s7-ri/">Referential integrity</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">SECTION 8 — Database Normalization</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-08/s8-1nf/">First Normal Form (1NF)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-08/s8-2nf/">Second Normal Form (2NF)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-08/s8-3nf/">Third Normal Form (3NF)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-08/s8-bcnf/">BCNF</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-08/s8-denorm/">Denormalization strategies</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">SECTION 9 — Indexing Architecture</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-09/s9-what/">What is an index</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-09/s9-btree/">B-tree index</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-09/s9-bitmap/">Bitmap index</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-09/s9-composite/">Composite index</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-09/s9-unique/">Unique index</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-09/s9-usage/">Index usage</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-09/s9-avoid/">When not to use indexes</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-09/s9-diagrams/">Index access path diagram</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-09/s9-compare/">Index vs full scan comparison</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">SECTION 10 — Query Optimization & Performance</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-10/s10-plan/">Query execution plan</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-10/s10-cbo/">Cost-based optimizer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-10/s10-index-analysis/">Index usage analysis</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-10/s10-fts/">Full table scans</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-10/s10-join-opt/">Join optimization</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-10/s10-partitioning/">Partitioning strategies</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">SECTION 11 — Oracle Caching Architecture</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-11/s11-buffer/">Buffer cache</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-11/s11-shared-pool/">Shared pool</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-11/s11-library/">Library cache</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-11/s11-result-cache/">SQL result cache</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-11/s11-strategies/">Query caching strategies</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">SECTION 12 — PL/SQL Programming</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-12/s12-proc/">Stored procedures</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-12/s12-fn/">Functions</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-12/s12-packages/">Packages</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-12/s12-triggers/">Triggers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-12/s12-exceptions/">Exception handling</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-12/s12-cursors/">Cursor usage</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-12/s12-bulk/">Bulk operations</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">SECTION 13 — Transactions & Concurrency</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-13/s13-acid/">ACID properties</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-13/s13-commit/">COMMIT</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-13/s13-rollback/">ROLLBACK</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-13/s13-savepoint/">SAVEPOINT</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-13/s13-locks/">Locking mechanisms</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-13/s13-isolation/">Isolation levels</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">SECTION 14 — Advanced Database Features</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-14/s14-partitioning/">Partitioning</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-14/s14-mv/">Materialized views</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-14/s14-dblinks/">Database links</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-14/s14-seq/">Sequences</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-14/s14-synonyms/">Synonyms</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-14/s14-flashback/">Flashback queries</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">SECTION 15 — Enterprise Database Architecture</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-15/s15-ha/">High availability</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-15/s15-repl/">Replication</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-15/s15-dwh/">Data warehousing</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-15/s15-etl/">ETL pipelines</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-15/s15-part/">Data partitioning strategies</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-15/s15-scale/">Horizontal scaling</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">SECTION 16 — Real Enterprise Case Studies</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-16/s16-fin/">Financial transaction database</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-16/s16-ecom/">E-commerce order database</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-16/s16-iam/">User management system</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-16/s16-report/">Reporting database</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-16/s16-analytics/">Large-scale analytics database</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-16/s16-dwh/">Data warehouse architecture</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-16/s16-logs/">High-volume log database</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">SECTION 17 — Performance Engineering</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-17/s17-tuning/">Query tuning techniques</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-17/s17-index/">Index optimization</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-17/s17-cache/">Database caching strategies</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-17/s17-pool/">Connection pooling</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-17/s17-avoid/">Avoiding slow queries</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-17/s17-monitor/">Monitoring database performance</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">SECTION 18 — Database Anti-Patterns</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-18/s18-missing-index/">Missing indexes</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-18/s18-over-index/">Over-indexing</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-18/s18-nplus1/">N+1 query problem</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-18/s18-poor-norm/">Poor normalization</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-18/s18-joins/">Inefficient joins</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../section-18/s18-unbounded/">Unbounded queries</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Oracle Database Reference</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">SECTION 2 — SQL Query Fundamentals</li>
+      <li class="breadcrumb-item active">DISTINCT</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="distinct">DISTINCT</h1>
+<h2 id="concept-explanation">Concept explanation</h2>
+<p>DISTINCT is an Oracle Database building block or SQL construct that has direct impact on correctness, operability, and performance under production workload. Treat it as a contract between the data model, the optimizer, and application behavior (bind patterns, concurrency, and data distribution).</p>
+<p>In enterprise systems, database behavior must be predictable under growth and failure modes (hot keys, skew, plan drift, cache pressure, and lock contention). The goal of this reference is to document the intent and operational consequences, not just syntax.</p>
+<h2 id="architecture-intent">Architecture intent</h2>
+<p>Define clear, enforceable semantics at the database layer so that performance and consistency are not delegated to application code. In Oracle, this also helps the CBO choose stable access paths by aligning schema constraints, statistics, and query patterns.</p>
+<p>Operational intent should be explicit:</p>
+<ul>
+<li><strong>Correctness boundary</strong>: what the database guarantees (constraints, isolation, ordering)</li>
+<li><strong>Workload shape</strong>: OLTP vs reporting, concurrency expectations, and growth assumptions</li>
+<li><strong>Observability</strong>: what you will measure to prove it is behaving as designed</li>
+</ul>
+<h2 id="sql-example">SQL example</h2>
+<pre><code class="language-sql">SELECT /*+ gather_plan_statistics */
+       o.order_id,
+       o.customer_id,
+       o.order_status,
+       o.created_at
+FROM   core_order o
+WHERE  o.created_at &gt;= SYSTIMESTAMP - INTERVAL '7' DAY
+AND    o.order_status IN ('PAID','SHIPPED')
+ORDER  BY o.created_at DESC
+FETCH  FIRST 50 ROWS ONLY;
+</code></pre>
+<h2 id="sample-input-data">Sample input data</h2>
+<pre><code class="language-sql">-- Use your authoritative production-like dataset.
+-- Focus on realistic cardinality, selectivity, and data skew.
+</code></pre>
+<h2 id="query-execution">Query execution</h2>
+<p>Validate behavior using runtime evidence, not only estimated plans:</p>
+<ul>
+<li><strong>Plan + actuals</strong>: execute with realistic binds and inspect <code>DBMS_XPLAN.DISPLAY_CURSOR</code> using   <code>ALLSTATS LAST</code> (and <code>+PEEKED_BINDS</code> where relevant).</li>
+<li><strong>System context</strong>: confirm waits, CPU, and I/O via AWR/ASH and (for long SQL) SQL Monitor.</li>
+<li><strong>Metadata correctness</strong>: verify constraints/index definitions using <code>DBA_CONSTRAINTS</code>,   <code>DBA_INDEXES</code>, <code>DBA_IND_COLUMNS</code>, and <code>DBA_TAB_COLUMNS</code>.</li>
+</ul>
+<p>If the topic is performance-sensitive, capture baseline signals:</p>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>Why it matters in production</th>
+<th>Where to validate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Elapsed time (p50/p95/p99)</td>
+<td>SLA compliance and tail latency</td>
+<td>App metrics + SQL Monitor</td>
+</tr>
+<tr>
+<td>Consistent gets</td>
+<td>Logical I/O pressure (buffer cache)</td>
+<td><code>DBMS_XPLAN</code> ALLSTATS, AWR</td>
+</tr>
+<tr>
+<td>Physical reads</td>
+<td>Storage latency and cache miss rate</td>
+<td>AWR, v$ views</td>
+</tr>
+<tr>
+<td>Rows (E-Rows vs A-Rows)</td>
+<td>Cardinality estimate quality</td>
+<td><code>DBMS_XPLAN</code> ALLSTATS</td>
+</tr>
+<tr>
+<td>Temp/PGA usage</td>
+<td>Sort/hash spill risk</td>
+<td>SQL Monitor, v$sql_workarea</td>
+</tr>
+</tbody>
+</table>
+<h2 id="output">Output</h2>
+<p>Expected results include correct row sets (or constraint enforcement) and a predictable plan shape. In production, define acceptance criteria in terms of latency percentiles, consistent gets, physical reads, and concurrency behavior, not only row counts.</p>
+<p>When documenting output for enterprise use, specify:</p>
+<ul>
+<li><strong>Functional</strong>: correctness rules (e.g., uniqueness, referential integrity, null semantics)</li>
+<li><strong>Operational</strong>: plan shape expectations and key predicates</li>
+<li><strong>Non-functional</strong>: performance envelope and failure behavior under load</li>
+</ul>
+<h2 id="real-enterprise-use-case">Real enterprise use case</h2>
+<p>Use this construct to enforce core domain invariants (identity, referential integrity, status transitions) and to shape SQL patterns used by services and reporting pipelines. The database remains the source of truth for correctness; application tiers focus on workflow orchestration and resiliency.</p>
+<p>Typical systems impacted:</p>
+<ul>
+<li><strong>Payments/ledger</strong>: high write volume, strict auditability, contention management</li>
+<li><strong>IAM</strong>: unique identity constraints, predictable lookup latency, safe schema evolution</li>
+<li><strong>Order/inventory</strong>: mixed OLTP + reporting, hot partitions, time-window access patterns</li>
+</ul>
+<h2 id="performance-considerations">Performance considerations</h2>
+<p>Assess data volume, skew, and concurrency. In Oracle, features such as index compression, partition pruning, bind-aware cursor sharing, and buffer cache behavior can dominate observed latency. Ensure statistics are current and representative.</p>
+<p>Decision criteria that tend to separate production-grade designs from toy designs:</p>
+<ul>
+<li><strong>Selectivity vs volume</strong>: is the predicate selective enough for an index path?</li>
+<li><strong>Concurrency</strong>: will this choice amplify lock/ITL/mutex contention?</li>
+<li><strong>Change rate</strong>: how often do rows change (DML) and what does that imply for index maintenance and caching?</li>
+<li><strong>Data distribution</strong>: do histograms/extended stats matter, and are they stable?</li>
+</ul>
+<h2 id="query-optimization-notes">Query optimization notes</h2>
+<p>Optimization guidance should be specific and testable:</p>
+<ul>
+<li><strong>Sargability</strong>: keep predicates indexable; avoid wrapping filtered columns unless you have function-based indexes.</li>
+<li><strong>Datatype alignment</strong>: eliminate implicit conversions that prevent index usage.</li>
+<li><strong>Join/filter alignment</strong>: match composite index column order to the most selective predicates and join keys.</li>
+<li><strong>Plan stability</strong>: use SPM for tier-1 SQL when plan regressions have unacceptable risk.</li>
+</ul>
+<h2 id="best-practice-recommendations">Best practice recommendations</h2>
+<ul>
+<li>Standardize naming and ownership to support incident response and safe automation</li>
+<li>Enforce constraints in the schema (do not rely on application-only invariants)</li>
+<li>Use bind variables for hot paths; validate cursor sharing and bind sensitivity</li>
+<li>Keep statistics current; treat stats strategy as part of release management</li>
+<li>Operationalize observability (AWR/ASH, SQL Monitor, v$ views) and set regression gates</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../s2-having/" class="btn btn-neutral float-left" title="HAVING"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../s2-fetch/" class="btn btn-neutral float-right" title="FETCH / LIMIT">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../s2-having/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../s2-fetch/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../assets/sidebar-scroll.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
